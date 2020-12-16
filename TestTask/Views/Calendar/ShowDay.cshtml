@@ -1,0 +1,59 @@
+﻿@model TestTask.ViewModels.DayModel
+@{
+    ViewBag.Title = "Day";
+    Layout = "_Layout";
+}
+
+<h2>@DateTime.Parse(Model.CurrentDate).ToString("D")</h2>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Tasks.First().Text)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Tasks.First().Date)
+        </th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model.Tasks) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Text)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateTask">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Date" class="control-label">Time</label>
+                <select asp-for="Date" class ="form-control" asp-items="ViewBag.TimeIntervals"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Text" class="control-label"></label>
+                <input asp-for="Text" class="form-control" />
+                <span asp-validation-for="Text" class="text-danger"></span>
+            </div>
+            <div type="hidden">
+                <input type="hidden" asp-for="CurrentDate" class="form-control" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>

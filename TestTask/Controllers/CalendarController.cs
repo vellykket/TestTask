@@ -10,7 +10,6 @@ using Task = TestTask.Models.Task;
 
 namespace TestTask.Controllers
 {
-    
     public class CalendarController : Controller
     {
         private readonly TestTaskContext _context;
@@ -27,7 +26,12 @@ namespace TestTask.Controllers
             year ??= DateTime.Now.Year;
             if (month == null || month >= 12) month = DateTime.Now.Month;
             calendarModel.FirstDayOfTheMonth = new DateTime((int) year, (int) month, 1);
-            calendarModel.StartDate = calendarModel.FirstDayOfTheMonth.AddDays(-(int)calendarModel.FirstDayOfTheMonth.DayOfWeek + 1);
+            calendarModel.StartDate = calendarModel.FirstDayOfTheMonth.AddDays(-(int) calendarModel.FirstDayOfTheMonth.DayOfWeek + 1);
+            if (calendarModel.FirstDayOfTheMonth.DayOfWeek == 0)
+            {
+                calendarModel.StartDate =
+                    calendarModel.FirstDayOfTheMonth.AddDays(-6);
+            }
             calendarModel.Tasks = _context.Tasks;
             return View(calendarModel);
         }
@@ -55,14 +59,14 @@ namespace TestTask.Controllers
             };
             _context.Add(task);
             await _context.SaveChangesAsync();
-            return RedirectToAction("ShowDay", new {dayDate = dayModel.Date.ToString("dd-MM-yyyy")});
+            return RedirectToAction("ShowDay", new {dayDate = dayModel.Date.ToShortDateString()});
         }
         
         public async Task<IActionResult> Delete(int? id)
         {
             var task = _context.Tasks.FirstOrDefault(task1 => task1.Id == id);
             if (task == null) return NotFound();
-            var date = task.Date.ToString("dd-MM-yyyy");
+            var date = task.Date.ToShortDateString();
             _context.Tasks.Remove(task);
             await _context.SaveChangesAsync();
             return RedirectToAction("ShowDay", new {dayDate = date});

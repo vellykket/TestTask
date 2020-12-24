@@ -8,13 +8,13 @@
     <header>
         <h4 class="display-4 mb-4 text-center">@Model.FirstDayOfTheMonth.ToString("MMMM") @Model.FirstDayOfTheMonth.Year</h4>
         <div class="row d-none d-sm-flex p-1 bg-dark text-white">
-            <h5 class="col-sm p-1 text-center">Понедельник</h5>
-            <h5 class="col-sm p-1 text-center">Вторник</h5>
-            <h5 class="col-sm p-1 text-center">Среда</h5>
-            <h5 class="col-sm p-1 text-center">Четверг</h5>
-            <h5 class="col-sm p-1 text-center">Пьятница</h5>
-            <h5 class="col-sm p-1 text-center">Суббота</h5>
-            <h5 class="col-sm p-1 text-center">Воскресенье</h5>
+            <h5 class="col-sm p-1 text-center">Monday</h5>
+            <h5 class="col-sm p-1 text-center">Tuesday</h5>
+            <h5 class="col-sm p-1 text-center">Wednesday</h5>
+            <h5 class="col-sm p-1 text-center">Thursday</h5>
+            <h5 class="col-sm p-1 text-center">Friday</h5>
+            <h5 class="col-sm p-1 text-center">Saturday</h5>
+            <h5 class="col-sm p-1 text-center">Sunday</h5>
         </div>
     </header>
     <div class="row border border-right-0 border-bottom-0">
@@ -30,11 +30,11 @@
                 <h5 class="row align-items-center">
                     @if (date.Month == Model.FirstDayOfTheMonth.Month)
                     {
-                        <span class="date col-1"><a class="day-number-current" asp-controller="Calendar" asp-action="ShowDay" asp-route-dayDate="@date.ToString("dd-MM-yyyy")">@date.Day</a></span>
+                        <span class="date col-1"><a class="day-number-current" asp-controller="Calendar" asp-action="ShowDay" asp-route-dayDate="@date.Date.ToShortDateString()">@date.Day</a></span>
                     }
                     else
                     {
-                        <span class="date col-1"><a class="day-number" asp-controller="Calendar" asp-action="ShowDay" asp-route-dayDate="@date.ToString("dd-MM-yyyy")">@date.Day</a></span>
+                        <span class="date col-1"><a class="day-number" asp-controller="Calendar" asp-action="ShowDay" asp-route-dayDate="@date.ToShortDateString()">@date.Day</a></span>
                     }
                     <small class="col d-sm-none text-center text-muted">Sunday</small>
                     <span class="col-1"></span>
